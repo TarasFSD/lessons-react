@@ -1,0 +1,9 @@
+.btn{
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+
+}
+.btn:hover{
+    cursor: pointer;
+}
