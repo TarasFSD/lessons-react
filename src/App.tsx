@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {ChangeEvent, useState} from 'react';
+import {useToggle} from "./hooks/useToggleHook"
+import {usePrevious} from "./hooks/usePreviousHook"
+import {useStorage} from "./hooks/useStorageHook"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [inputText, setInputText] = useState("");
+    const [inputTextStorage, setInputTextStorage] = useState("");
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputText(e.target.value);
+    };
+    const handleChangeStorage = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputTextStorage(e.target.value);
+    };
+
+
+    const {value, toggle,} = useToggle()
+    const {current, previous, } = usePrevious(inputText)
+    const {data,sendToStorage, getFromStorage} = useStorage("text", inputTextStorage)
+
+    return (
+        <div className="App">
+            <div>value {`${value}`}</div>
+            <button onClick={() => toggle()}>change toggle</button>
+            <br/>
+            <br/>
+            <div>previous: {`${previous}`}</div>
+            <input type="text" onChange={handleChange} value={inputText}/>
+            <br/>
+            <br/>
+            <div> {`${data}`}</div>
+            <input type="text" onChange={handleChangeStorage} value={inputTextStorage}/>
+            <button onClick={() => sendToStorage()}>send data</button>
+        </div>
+    );
 }
 
 export default App;
