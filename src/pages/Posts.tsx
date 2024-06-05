@@ -2,20 +2,21 @@ import React, {useEffect, useState} from 'react';
 import {IPostModel} from "../models/models"
 import {getAllPosts} from "../services/services"
 import {Post} from "../components/post"
-const PostsPage = () => {
-    const [value, setValue] = useState<IPostModel[]>()
-    useEffect(() => {
-        getAllPosts().then(({data}) =>setValue(data))
-    }, []);
+import {useContextProvider} from "../context/ContextProvider"
 
-    console.log(value && value)
+const PostsPage = () => {
+
+    const {postsStore:{allPosts}} = useContextProvider();
+
+
+
     return (
         <div>
             <h2>Posts</h2>
-            {value? "" : "loading"}
+            {allPosts? "" : "loading"}
 
             {
-                value && value.map((post:IPostModel)=><Post key={post.id} {...post}/>)
+                allPosts && allPosts.map((post:IPostModel)=><Post key={post.id} {...post}/>)
             }
         </div>
     );

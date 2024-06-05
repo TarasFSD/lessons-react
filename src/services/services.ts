@@ -5,7 +5,7 @@ const instance = axios.create({
     headers: {'content-type': 'application/json; charset=UTF-8'}});
 
 const getAllUsers = ()=>{
-return instance.get("users")
+    return instance.get("users")
 }
 const getAllPosts = ()=>{
     return instance.get("posts")
